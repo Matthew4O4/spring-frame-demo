@@ -1,0 +1,31 @@
+package cn.bugstack.springframework.test;
+
+import cn.bugstack.springframework.beans.factory.config.BeanDefinition;
+import cn.bugstack.springframework.beans.factory.support.DefaultListableBeanFactory;
+import cn.bugstack.springframework.test.bean.UserService;
+import org.junit.Test;
+
+/**
+ * @Description: 测试类
+ * @Author: matthew
+ * @Date: 2023/1/2 23:31
+ */
+public class ApiTest {
+    @Test
+    public void test_BeanFactory() {
+        // 1.初始化 BeanFactory
+        DefaultListableBeanFactory beanFactory = new DefaultListableBeanFactory();
+
+        // 2.注册 Bean
+        BeanDefinition beanDefinition = new BeanDefinition(UserService.class);
+        beanFactory.registerBeanDefinition("userService", beanDefinition);
+
+        // 3.第一次获取 Bean
+        UserService userService = (UserService) beanFactory.getBean("userService");
+        userService.queryUserInfo();
+
+        // 4.第二次获取 Bean from Singleton
+        UserService userService_singleton = (UserService) beanFactory.getBean("userService");
+        userService_singleton.queryUserInfo();
+    }
+}
