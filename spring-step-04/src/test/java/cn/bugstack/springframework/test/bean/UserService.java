@@ -7,7 +7,8 @@ package cn.bugstack.springframework.test.bean;
  */
 public class UserService {
 
-    private  UserDao userDao;
+
+    private UserDao userDao;
 
 
     public void queryUserInfo(String uId) {
