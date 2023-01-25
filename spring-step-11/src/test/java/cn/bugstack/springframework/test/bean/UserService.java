@@ -1,39 +1,20 @@
 package cn.bugstack.springframework.test.bean;
 
-import cn.bugstack.springframework.beans.BeansException;
-import cn.bugstack.springframework.beans.factory.BeanClassLoaderAware;
-import cn.bugstack.springframework.beans.factory.BeanFactory;
-import cn.bugstack.springframework.beans.factory.BeanFactoryAware;
-import cn.bugstack.springframework.beans.factory.BeanNameAware;
-import cn.bugstack.springframework.context.ApplicationContext;
-import cn.bugstack.springframework.context.ApplicationContextAware;
+import java.util.Random;
 
 /**
  * @Description:
  * @Author: matthew
  * @Date: 2023/1/2 23:30
  */
-public class UserService implements BeanNameAware, BeanClassLoaderAware, ApplicationContextAware, BeanFactoryAware {
+public class UserService implements IUserService {
 
-//    @Override
-//    public String toString() {
-//        return "UserService{" +
-//                "userDao=" + userDao +
-//                ", uId='" + uId + '\'' +
-//                ", company='" + company + '\'' +
-//                ", location='" + location + '\'' +
-//                '}';
-//    }
 
-    private IUserDao userDao;
     private String uId;
 
     private String company;
 
     private String location;
-
-    private ApplicationContext applicationContext;
-    private BeanFactory beanFactory;
 
     public String getCompany() {
         return company;
@@ -52,16 +33,24 @@ public class UserService implements BeanNameAware, BeanClassLoaderAware, Applica
     }
 
     public String queryUserInfo() {
-        return userDao.queryUserName(uId);
+        try {
+            Thread.sleep(new Random(1).nextInt(100));
+        } catch (InterruptedException e) {
+            throw new RuntimeException(e);
+        }
+        return uId;
     }
 
-    public IUserDao getUserDao() {
-        return userDao;
+    @Override
+    public String register(String userName) {
+        try {
+            Thread.sleep(new Random(1).nextInt(100));
+        } catch (InterruptedException e) {
+            throw new RuntimeException(e);
+        }
+        return "注册用户: " + userName + "success! ";
     }
 
-    public void setUserDao(IUserDao userDao) {
-        this.userDao = userDao;
-    }
 
     public String getuId() {
         return uId;
@@ -71,23 +60,4 @@ public class UserService implements BeanNameAware, BeanClassLoaderAware, Applica
         this.uId = uId;
     }
 
-    @Override
-    public void setBeanClassLoader(ClassLoader classLoader) {
-        System.out.println("Bean ClassLoader is:" + classLoader);
-    }
-
-    @Override
-    public void setBeanFactory(BeanFactory beanFactory) throws BeansException {
-        this.beanFactory = beanFactory;
-    }
-
-    @Override
-    public void setBeanName(String name) {
-        System.out.println("Bean Name is: " + name);
-    }
-
-    @Override
-    public void setApplicationContext(ApplicationContext applicationContext) throws BeansException {
-        this.applicationContext = applicationContext;
-    }
 }
